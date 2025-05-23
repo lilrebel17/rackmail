@@ -1,6 +1,7 @@
 import argparse
 from version import VERSION
 from subcommands.enable_user import enable_user
+from subcommands.disable_user import disable_user
 
 if __name__ == "__main__":
     main_parser = argparse.ArgumentParser(prog="rackmailcli",description="CLI to interact with Rackspace's Hosted Email API",)
@@ -14,8 +15,14 @@ if __name__ == "__main__":
     subparsers = main_parser.add_subparsers(dest="command")
 
     enable_user_subcommand = subparsers.add_parser("enableuser",description="Enables a hosted mailbox",parents=[global_command_parser])
+    enable_user_subcommand.set_defaults(func=enable_user)
+
+    disable_user_subcommand = subparsers.add_parser("disableuser",description="Disables a hosted mailbox",parents=[global_command_parser])
+    disable_user_subcommand.set_defaults(func=disable_user)
 
     args = main_parser.parse_args()
-    
-    # Adds the functions that the subcommands will use below.
-    enable_user_subcommand.set_defaults(func=enable_user(args))
+
+    if hasattr(args, 'func'):
+        args.func(args)
+    else:
+        main_parser.print_help()
