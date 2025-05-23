@@ -4,8 +4,6 @@ from requests import put
 def enable_user(args):
     rackspace_client = RackspaceClient()
 
-    print(rackspace_client.auth_header)
-
     url = f"https://api.emailsrvr.com/v1/customers/{rackspace_client.customer_id}/domains/{args.domain}/rs/mailboxes/{args.email}"
     request = put(url,headers=RackspaceClient().auth_header,json={"enabled":True})
 
