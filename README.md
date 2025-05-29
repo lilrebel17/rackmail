@@ -63,7 +63,7 @@ pip install . #Installs the project as a pip package.
 To build a distributable
 ```bash
 cd rackmail #Projects root directory
-pip -m build
+python -m build
 ```
 
 ## 🤝 Contributing
