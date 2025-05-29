@@ -1,6 +1,6 @@
 from os import environ
 from dotenv import load_dotenv
-from version import VERSION
+from .version import VERSION
 
 class RackspaceClient():
     def __init__(self,api_header=None,customer_id=None) -> None:

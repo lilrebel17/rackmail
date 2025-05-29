@@ -1,10 +1,10 @@
 import argparse
-from version import VERSION
-from subcommands.enable_user import enable_user
-from subcommands.disable_user import disable_user
+from .version import VERSION
+from .subcommands.enable_user import enable_user
+from .subcommands.disable_user import disable_user
 
-if __name__ == "__main__":
-    main_parser = argparse.ArgumentParser(prog="rackmailcli",description="CLI to interact with Rackspace's Hosted Email API",)
+def main():
+    main_parser = argparse.ArgumentParser(prog="rackmail",description="CLI to interact with Rackspace's Hosted Email API",)
     main_parser.add_argument("--version",action="version",version=f"{main_parser.prog} V.{VERSION}")
 
     # This is store two arguments, we can add this as a parent to sub parsers so they will use the --email and --domain arguments.
@@ -26,3 +26,6 @@ if __name__ == "__main__":
         args.func(args)
     else:
         main_parser.print_help()
+
+if __name__ == "__main__":
+    main()
