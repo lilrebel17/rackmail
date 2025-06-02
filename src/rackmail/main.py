@@ -2,6 +2,7 @@ import argparse
 from .version import VERSION
 from .subcommands.enable_user import enable_user
 from .subcommands.disable_user import disable_user
+from .subcommands.get_mailbox import get_mailbox
 from .subcommands.set_password import set_password
 
 def main():
@@ -20,11 +21,13 @@ def main():
 
     disable_user_subcommand = subparsers.add_parser("disableuser",description="Disables a hosted mailbox",parents=[global_command_parser])
     disable_user_subcommand.set_defaults(func=disable_user)
+    get_mailbox_subcommand = subparsers.add_parser("getmailbox",description="Gets all available information about a mailbox",parents=[global_command_parser])
+    get_mailbox_subcommand.set_defaults(func=get_mailbox)
 
     change_password_subcommand = subparsers.add_parser("setpassword",description="Sets the password of a mailbox",parents=[global_command_parser])
     change_password_subcommand.add_argument("-p","--password",action="store",metavar="password",dest="password",help="The password you want set on a mailbox",required=False,default=None)
     change_password_subcommand.set_defaults(func=set_password)
-
+    
     args = main_parser.parse_args()
 
     if hasattr(args, 'func'):
