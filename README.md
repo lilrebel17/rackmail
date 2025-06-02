@@ -45,6 +45,12 @@ You will need information from your Rackspace Hosted Email tenant to fully setup
 
 To get the correct X-API-Signature Header. Please use rackmailcli as the useragent header.
 
+After you get the three items listed above, you need to setup the environment on your machine. Please use the following key value pairs in your environment. Replacing the values of each with the values you got from Rackspace's admin console.
+
+1. ```RACKSPACE_API_KEY = User Key```
+2. ```RACKSPACE_CUSTOMER_ID = Customer ID```
+3. ```RACKSPACE_API_HEADER = X-Api-Signature Header```
+
 ## 🔧 Development
 
 To Setup the code base.
