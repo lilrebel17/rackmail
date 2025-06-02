@@ -2,6 +2,7 @@ import argparse
 from .version import VERSION
 from .subcommands.enable_user import enable_user
 from .subcommands.disable_user import disable_user
+from .subcommands.get_mailbox import get_mailbox
 
 def main():
     main_parser = argparse.ArgumentParser(prog="rackmail",description="CLI to interact with Rackspace's Hosted Email API",)
@@ -19,6 +20,9 @@ def main():
 
     disable_user_subcommand = subparsers.add_parser("disableuser",description="Disables a hosted mailbox",parents=[global_command_parser])
     disable_user_subcommand.set_defaults(func=disable_user)
+
+    get_mailbox_subcommand = subparsers.add_parser("getmailbox",description="Gets all available information about a mailbox",parents=[global_command_parser])
+    get_mailbox_subcommand.set_defaults(func=get_mailbox)
 
     args = main_parser.parse_args()
 
