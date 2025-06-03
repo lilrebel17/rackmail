@@ -19,5 +19,5 @@ def set_password(args):
             request.status_code,
             args.command,
             f"{args.email}{args.domain}",
-            f"Updated Password: {password}" if request.status_code == 200 else "See status code for more info")
+            f"Updated Password: {password}" if request.status_code == 200 else request.text)
         )

@@ -13,5 +13,5 @@ def disable_user(args):
             request.status_code,
             args.command,
             f"{args.email}{args.domain}",
-            "User was disabled" if request.status_code == 200 else "See status code for more info")
+            "User was disabled" if request.status_code == 200 else request.text)
         )

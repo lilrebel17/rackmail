@@ -13,5 +13,5 @@ def get_mailbox(args):
             request.status_code,
             args.command,
             f"{args.email}{args.domain}",
-            request.json() if request.status_code == 200 else "See status code for more info")
+            request.json() if request.status_code == 200 else request.text)
         )
