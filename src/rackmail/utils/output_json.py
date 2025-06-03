@@ -1,6 +1,6 @@
 import json
 
-def output_json(status:int,command:str,email:str,text:str):
+def output_json(status:int,command:str,email:str,text):
     data = {
         "Command": command,
         "Email": email,
