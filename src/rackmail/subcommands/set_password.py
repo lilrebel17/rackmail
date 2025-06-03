@@ -18,6 +18,6 @@ def set_password(args):
         output_json(
             request.status_code,
             args.command,
-            f"{args.email}{args.domain}",
+            f"{args.email}@{args.domain}",
             f"Updated Password: {password}" if request.status_code == 200 else request.text)
         )
