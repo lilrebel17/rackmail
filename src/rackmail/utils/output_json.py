@@ -9,4 +9,4 @@ def output_json(status:int,command:str,email:str,text:str):
         "Text": text
     }
 
-    return json.dumps(data)
+    return json.dumps(data,indent=2)
