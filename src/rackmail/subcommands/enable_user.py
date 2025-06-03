@@ -1,4 +1,5 @@
 from ..client import RackspaceClient
+from ..utils.output_json import output_json
 from requests import put
 
 def enable_user(args):
@@ -7,8 +8,10 @@ def enable_user(args):
     url = f"https://api.emailsrvr.com/v1/customers/{rackspace_client.customer_id}/domains/{args.domain}/rs/mailboxes/{args.email}"
     request = put(url,headers=RackspaceClient().auth_header,json={"enabled":True})
 
-    if request.status_code == 200:
-        print("Rackspace API returned 200, account was enabled.")
-    else:
-        print(request.text)
-        print(f"Status Code: {request.status_code}")
+    print(
+        output_json(
+            request.status_code,
+            args.command,
+            f"{args.email}{args.domain}",
+            "User was enabled" if request.status_code == 200 else "See status code for more info")
+        )
