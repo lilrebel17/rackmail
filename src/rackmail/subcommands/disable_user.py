@@ -11,7 +11,7 @@ def disable_user(args):
     print(
         output_json(
             request.status_code,
-            "disableuser",
+            args.command,
             f"{args.email}{args.domain}",
             "User was disabled" if request.status_code == 200 else "See status code for more info")
         )
