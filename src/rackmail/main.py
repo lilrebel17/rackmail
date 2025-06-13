@@ -5,6 +5,9 @@ from .subcommands.disable_user import disable_user
 from .subcommands.get_mailbox import get_mailbox
 from .subcommands.set_password import set_password
 
+def debug_print(args):
+    print(args)
+
 def main():
     main_parser = argparse.ArgumentParser(prog="rackmail",description="CLI to interact with Rackspace's Hosted Email API",)
     main_parser.add_argument("--version",action="version",version=f"{main_parser.prog} V.{VERSION}")
@@ -24,9 +27,10 @@ def main():
     get_mailbox_subcommand = subparsers.add_parser("getmailbox",description="Gets all available information about a mailbox",parents=[global_command_parser])
     get_mailbox_subcommand.set_defaults(func=get_mailbox)
 
-    change_password_subcommand = subparsers.add_parser("setpassword",description="Sets the password of a mailbox",parents=[global_command_parser])
-    change_password_subcommand.add_argument("-p","--password",action="store",metavar="password",dest="password",help="The password you want set on a mailbox",required=False,default=None)
-    change_password_subcommand.set_defaults(func=set_password)
+    change_password_subcommand = subparsers.add_parser("set",description="Sets a property on a mailbox",parents=[global_command_parser])
+    change_password_subcommand.add_argument("property",action="store",metavar="property",help="The property being changed")
+    change_password_subcommand.add_argument("value",action="store",metavar="value",help="The updated value of the property being changed")
+    change_password_subcommand.set_defaults(func=debug_print)
     
     args = main_parser.parse_args()
 
