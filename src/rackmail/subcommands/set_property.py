@@ -6,10 +6,6 @@ from requests import put
 def set_property(args):
     rackspace_client = RackspaceClient()
 
-    if args.property == "password":
-        if args.value == "":
-            args.value = generate_random_string()
-
     url = f"https://api.emailsrvr.com/v1/customers/{rackspace_client.customer_id}/domains/{args.domain}/rs/mailboxes/{args.email}"
     request = put(url,headers=RackspaceClient().auth_header,json={args.property:args.value})
 
