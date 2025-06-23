@@ -20,7 +20,7 @@ classifiers = [
     "Operating System :: OS Independent",
     "Environment :: Console",
     "Topic :: Communications :: Email",
-    "Intended Audience :: Systems Administrators",
+    "Intended Audience :: System Administrators",
     "Development Status :: 4 - Beta"
 ]
 [project.scripts]
