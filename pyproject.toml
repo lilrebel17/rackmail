@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "rackmail"
-version = "0.3.3"
+version = "0.3.4"
 description = "CLI tool for managing Rackspace hosted mailboxes"
 authors = [{ name = "Zack Farmer", email = "zackfarmer1710@gmail.com" }]
 readme = "README.md"
@@ -14,6 +14,14 @@ dependencies = [
     "requests",
     "dotenv"
 ]
-
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Communications :: Email",
+    "Intended Audience :: Systems Administrators",
+    "Development Status :: 4 - Beta"
+]
 [project.scripts]
 rackmail = "rackmail.main:main"
