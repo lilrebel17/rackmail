@@ -15,22 +15,23 @@ def main():
     global_command_parser.add_argument("-e","--email",action="store",metavar="email",dest="email",help="the email address of a mailbox",required=True)
     global_command_parser.add_argument("-d","--domain",action="store",metavar="domain",dest="domain",help="the domain of a mailbox",required=True)
 
-    subparsers = main_parser.add_subparsers(dest="command")
+    subparsers = main_parser.add_subparsers(title="Commands",dest="command",metavar="")
 
-    enable_user_subcommand = subparsers.add_parser("enableuser",description="Enables a hosted mailbox",parents=[global_command_parser])
+    enable_user_subcommand = subparsers.add_parser("enableuser",help="Enables a hosted mailbox",parents=[global_command_parser])
     enable_user_subcommand.set_defaults(func=enable_user)
 
-    disable_user_subcommand = subparsers.add_parser("disableuser",description="Disables a hosted mailbox",parents=[global_command_parser])
+    disable_user_subcommand = subparsers.add_parser("disableuser",help="Disables a hosted mailbox",parents=[global_command_parser])
     disable_user_subcommand.set_defaults(func=disable_user)
-    get_mailbox_subcommand = subparsers.add_parser("getmailbox",description="Gets all available information about a mailbox",parents=[global_command_parser])
+    get_mailbox_subcommand = subparsers.add_parser("getmailbox",help="Gets all available information about a mailbox",parents=[global_command_parser])
     get_mailbox_subcommand.set_defaults(func=get_mailbox)
 
-    change_password_subcommand = subparsers.add_parser("setpassword",description="Sets the password of a mailbox",parents=[global_command_parser])
+    change_password_subcommand = subparsers.add_parser("setpassword",help="Sets the password of a mailbox",parents=[global_command_parser])
     change_password_subcommand.add_argument("-p","--password",action="store",metavar="password",dest="password",help="The password you want set on a mailbox",required=False,default=None)
     change_password_subcommand.set_defaults(func=set_password)
 
     set_subcommand = subparsers.add_parser(
         "set",
+        help="Set any property from the Rackspace API",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description=(
             "Set Rackspace API properties that don’t need their own command.\n"
