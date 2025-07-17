@@ -38,6 +38,7 @@ def main():
     list_subcommand= subparsers.add_parser("listall",help="Lists all mailboxes for a given domain")
     list_subcommand.add_argument("-d","--domain",action="store",metavar="domain",dest="domain",help="the domain of a mailbox",required=True)
     list_subcommand.add_argument('-f',"--fields",action="store",metavar="fields",dest="fields",help="Optional comma seperated list of fields you want to output")
+    list_subcommand.add_argument("-p","--page",action="store",metavar="page",dest="page",help="The page number you want to list")
     list_subcommand.set_defaults(func=search_mailboxes)
 
     set_subcommand = subparsers.add_parser(
