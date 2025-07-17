@@ -6,6 +6,7 @@ from .subcommands.get_mailbox import get_mailbox
 from .subcommands.set_property import set_property
 from .subcommands.set_password import set_password
 from .subcommands.create_login_token import create_login_token
+from .subcommands.list_all import search_mailboxes
 
 def main():
     main_parser = argparse.ArgumentParser(prog="rackmail",description="CLI to interact with Rackspace's Hosted Email API",)
@@ -33,6 +34,11 @@ def main():
     token_subcommand = subparsers.add_parser("createlogintoken",help="Creates a login token for a mailbox for SSO or viewing.",parents=[global_command_parser])
     token_subcommand.add_argument("-w","--webmail",help="Your custom webmail address",metavar="webmail_url",dest="webmail_url")
     token_subcommand.set_defaults(func=create_login_token)
+
+    list_subcommand= subparsers.add_parser("listall",help="Lists all mailboxes for a given domain")
+    list_subcommand.add_argument("-d","--domain",action="store",metavar="domain",dest="domain",help="the domain of a mailbox",required=True)
+    list_subcommand.add_argument('-f',"--fields",action="store",metavar="fields",dest="fields",help="Optional comma seperated list of fields you want to output")
+    list_subcommand.set_defaults(func=search_mailboxes)
 
     set_subcommand = subparsers.add_parser(
         "set",
