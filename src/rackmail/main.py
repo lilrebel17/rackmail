@@ -69,7 +69,7 @@ def main():
             "  rackmail listall -d mydomain.com -p 50\n"
             "  rackmail listall -d mydomain.com -p 50 -f currentUsage,enabled,createdDate\n"
             "  rackmail listall -d mydomain.com -p 50 -f currentUsage,enabled,createdDate\n"
-            "  rackmail listall -d mydomain.com -o /var/log/rackmail/\n"
+            "  rackmail listall -d mydomain.com -o /var/log/rackmail/output.json\n"
         ),)
     list_subcommand.add_argument("-d","--domain",action="store",metavar="",dest="domain",help="the domain of a mailbox",required=True)
     list_subcommand.add_argument('-f',"--fields",action="store",metavar="",dest="fields",help="Optional comma seperated list of fields you want to output")
