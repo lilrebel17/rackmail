@@ -62,7 +62,7 @@ def main():
             "    Command returns 250 results per page, so divide your total number from 250.\n\n"
             " -o,--output:str [OPTIONAL]\n"
             "    This is the full filepath where you want your list to output.\n"
-            "    If you provide this argument, a csv will be created in the path provided"
+            "    If you provide this argument, a json will be created in the path provided"
             "    This argument will NOT create a folder, so ensure your folder is real\n\n"
             "Examples:\n"
             "  rackmail listall -d mydomain.com -f currentUsage,enabled,createdDate\n"
