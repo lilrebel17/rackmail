@@ -2,7 +2,7 @@ from ..client import RackspaceClient
 from ..utils.output_json import output_json
 from requests import get
 from math import ceil
-from json import dumps
+from json import dump
 
 def search_mailboxes(args):
     rackspace_client = RackspaceClient()
@@ -54,3 +54,45 @@ def search_mailboxes(args):
                         f"{e}"
                     )
                 )
+        else:
+            total_pages = ceil(total_emails / page_size)
+            page_list = _get_all_page_urls(total_pages,url)
+            total_email_list = []
+
+            for page in page_list:
+                request = get(page,headers=RackspaceClient().auth_header)
+                response = request.json()
+                mailbox_list = response.get("rsMailboxes")
+                for mailbox in mailbox_list:
+                    total_email_list.append(mailbox)
+            try:
+                with open(args.output,"w") as file:
+                    dump(total_email_list,file,indent=2)
+
+                print(
+                    output_json(
+                    200,
+                    args.command,
+                    f"{args.domain}",
+                    f"Your file has been created at {args.output}"
+                    )
+                )
+            except Exception as e:
+                print(
+                    output_json(
+                        500,
+                        args.command,
+                        f"{args.domain}",
+                        f"{e}"
+                    )
+                )
+
+def _get_all_page_urls(total_pages,url) -> list:
+    page_list = []
+    offset = 0
+    for i in range(total_pages):
+        page_url = url + f"&offset={offset}"
+        offset += 250
+        page_list.append(page_url)
+
+    return page_list
