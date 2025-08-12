@@ -45,7 +45,6 @@ def search_mailboxes(args):
                     f"Your file has been created at {args.output}"
                     )
                 )
-                print("IM DONE DUDE?!")
             except Exception as e:
                 print(
                     output_json(
@@ -55,10 +54,3 @@ def search_mailboxes(args):
                         f"{e}"
                     )
                 )
-        else:
-            raw_total_pages:float = total_emails / page_size
-            total_pages = ceil(raw_total_pages)
-            print("IM ABOVE 250?!")
-    
-def _get_all_mailboxes():
-    pass
