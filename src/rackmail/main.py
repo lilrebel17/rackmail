@@ -35,14 +35,6 @@ def main():
     token_subcommand.add_argument("-w","--webmail",help="Your custom webmail address",metavar="webmail_url",dest="webmail_url")
     token_subcommand.set_defaults(func=create_login_token)
 
-    #TODO: Finish this command
-    #Need to add --ouput and figure out how to make arguments optional based on other arguments.
-    #In this use case if --page isnt present, we require --output
-    #--output needs to be a path for a file, so we need to check IF it exists.
-    #if --output exists at all, we need to create the CSV file of the output
-    #We will need to update the output text to match this. 
-    #This function is VERY custom and needs to make sense.
-    #FOR THIS NEXT COMMIT. FIX THE HELP FIRST
     list_subcommand= subparsers.add_parser("listall",help="Lists mailboxes for a domain, under given parameters",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description=(
