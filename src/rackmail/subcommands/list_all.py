@@ -1,6 +1,8 @@
 from ..client import RackspaceClient
 from ..utils.output_json import output_json
 from requests import get
+from math import ceil
+from json import dumps
 
 def search_mailboxes(args):
     rackspace_client = RackspaceClient()
@@ -16,13 +18,47 @@ def search_mailboxes(args):
 
     if args.page:
         url = url + f"&offset={args.page}"
+        request = get(url,headers=RackspaceClient().auth_header)
+        print(
+            output_json(
+                request.status_code,
+                args.command,
+                f"{args.domain}",
+                request.json() if request.status_code == 200 else request.text)
+            )
 
-    request = get(url,headers=RackspaceClient().auth_header)
+    elif args.output:
+        request = get(url,headers=RackspaceClient().auth_header)
+        json_serialized_request = request.json()
+        total_emails = int(json_serialized_request.get("total"))
+        page_size = 250
 
-    print(
-        output_json(
-            request.status_code,
-            args.command,
-            f"{args.domain}",
-            request.json() if request.status_code == 200 else request.text)
-        )
+        if total_emails < page_size:
+            try:
+                with open(args.output,"w") as file:
+                    file.write(dumps(json_serialized_request,indent=2))
+                print(
+                    output_json(
+                    200,
+                    args.command,
+                    f"{args.domain}",
+                    f"Your file has been created at {args.output}"
+                    )
+                )
+                print("IM DONE DUDE?!")
+            except Exception as e:
+                print(
+                    output_json(
+                        500,
+                        args.command,
+                        f"{args.domain}",
+                        f"{e}"
+                    )
+                )
+        else:
+            raw_total_pages:float = total_emails / page_size
+            total_pages = ceil(raw_total_pages)
+            print("IM ABOVE 250?!")
+    
+def _get_all_mailboxes():
+    pass
