@@ -6,6 +6,7 @@ from .subcommands.get_mailbox import get_mailbox
 from .subcommands.set_property import set_property
 from .subcommands.set_password import set_password
 from .subcommands.create_login_token import create_login_token
+from .subcommands.list_all import search_mailboxes
 
 def main():
     main_parser = argparse.ArgumentParser(prog="rackmail",description="CLI to interact with Rackspace's Hosted Email API",)
@@ -33,6 +34,48 @@ def main():
     token_subcommand = subparsers.add_parser("createlogintoken",help="Creates a login token for a mailbox for SSO or viewing.",parents=[global_command_parser])
     token_subcommand.add_argument("-w","--webmail",help="Your custom webmail address",metavar="webmail_url",dest="webmail_url")
     token_subcommand.set_defaults(func=create_login_token)
+
+    #TODO: Finish this command
+    #Need to add --ouput and figure out how to make arguments optional based on other arguments.
+    #In this use case if --page isnt present, we require --output
+    #--output needs to be a path for a file, so we need to check IF it exists.
+    #if --output exists at all, we need to create the CSV file of the output
+    #We will need to update the output text to match this. 
+    #This function is VERY custom and needs to make sense.
+    #FOR THIS NEXT COMMIT. FIX THE HELP FIRST
+    list_subcommand= subparsers.add_parser("listall",help="Lists mailboxes for a domain, under given parameters",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description=(
+            "Lists out emails for a domain based on arguments given.\n\n"
+            "Arguments:\n"
+            " -d,--domain:str [REQUIRED]\n"
+            "  The domain your wanting to get data from. Should be in your rackspace tenant\n\n"
+            " -f,--fields:str [OPTIONAL](comma seperate list of below fields)\n"
+            "   You can add fields as a comma seperated list with -f,--fields\n"
+            "   There are 5 available fields listed in Rackspace's documentation\n"
+            "   Fields:\n"
+            "     size,currentUsage,enabled,createdDate,lastLogin\n\n"
+            " -p,--page:int [OPTIONAL]\n"
+            "    This will return a specific page\n"
+            "    If this argument is NOT present, --output MUST be present"
+            "    If you do not know how many pages, run without this argument\n"
+            "    Command returns 250 results per page, so divide your total number from 250.\n\n"
+            " -o,--output:str [OPTIONAL]\n"
+            "    This is the full filepath where you want your list to output.\n"
+            "    If you provide this argument, a json will be created in the path provided"
+            "    This argument will NOT create a folder, so ensure your folder is real\n\n"
+            "Examples:\n"
+            "  rackmail listall -d mydomain.com -f currentUsage,enabled,createdDate\n"
+            "  rackmail listall -d mydomain.com -p 50\n"
+            "  rackmail listall -d mydomain.com -p 50 -f currentUsage,enabled,createdDate\n"
+            "  rackmail listall -d mydomain.com -p 50 -f currentUsage,enabled,createdDate\n"
+            "  rackmail listall -d mydomain.com -o /var/log/rackmail/output.json\n"
+        ),)
+    list_subcommand.add_argument("-d","--domain",action="store",metavar="",dest="domain",help="the domain of a mailbox",required=True)
+    list_subcommand.add_argument('-f',"--fields",action="store",metavar="",dest="fields",help="Optional comma seperated list of fields you want to output")
+    list_subcommand.add_argument("-p","--page",action="store",metavar="",dest="page",help="The page number you want to list")
+    list_subcommand.add_argument("-o","--output",action="store",metavar="",dest="output",help="The full filepath where you want your CSV to be created")
+    list_subcommand.set_defaults(func=search_mailboxes)
 
     set_subcommand = subparsers.add_parser(
         "set",
