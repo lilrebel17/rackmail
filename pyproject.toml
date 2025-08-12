@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "rackmail"
-version = "0.4.4"
+version = "0.5.0"
 description = "CLI tool for managing Rackspace hosted mailboxes"
 authors = [{ name = "Zack Farmer", email = "zackfarmer1710@gmail.com" }]
 readme = "README.md"
