@@ -5,6 +5,7 @@ from .subcommands.disable_user import disable_user
 from .subcommands.get_mailbox import get_mailbox
 from .subcommands.set_property import set_property
 from .subcommands.set_password import set_password
+from .subcommands.create_login_token import create_login_token
 
 def main():
     main_parser = argparse.ArgumentParser(prog="rackmail",description="CLI to interact with Rackspace's Hosted Email API",)
@@ -28,6 +29,10 @@ def main():
     change_password_subcommand = subparsers.add_parser("setpassword",help="Sets the password of a mailbox",parents=[global_command_parser])
     change_password_subcommand.add_argument("-p","--password",action="store",metavar="password",dest="password",help="The password you want set on a mailbox",required=False,default=None)
     change_password_subcommand.set_defaults(func=set_password)
+
+    token_subcommand = subparsers.add_parser("createlogintoken",help="Creates a login token for a mailbox for SSO or viewing.",parents=[global_command_parser])
+    token_subcommand.add_argument("-w","--webmail",help="Your custom webmail address",metavar="webmail_url",dest="webmail_url")
+    token_subcommand.set_defaults(func=create_login_token)
 
     set_subcommand = subparsers.add_parser(
         "set",
