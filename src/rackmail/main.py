@@ -7,6 +7,8 @@ from .subcommands.set_property import set_property
 from .subcommands.set_password import set_password
 from .subcommands.create_login_token import create_login_token
 from .subcommands.list_all import search_mailboxes
+from .subcommands.delete_user import delete_user
+from .subcommands.create_user import create_user
 
 def main():
     main_parser = argparse.ArgumentParser(prog="rackmail",description="CLI to interact with Rackspace's Hosted Email API",)
@@ -19,11 +21,19 @@ def main():
 
     subparsers = main_parser.add_subparsers(title="Commands",dest="command",metavar="")
 
+    create_user_subcommand = subparsers.add_parser("createuser",help="Creates a mailbox",parents=[global_command_parser])
+    create_user_subcommand.set_defaults(func=create_user)
+    create_user_subcommand.add_argument("-p","--password",action="store",metavar="password",dest="password",help="The password you want set on a mailbox",required=False,default=None)
+
+    delete_user_subcommand = subparsers.add_parser("deleteuser",help="Deletes a mailbox",parents=[global_command_parser])
+    delete_user_subcommand.set_defaults(func=delete_user)
+
     enable_user_subcommand = subparsers.add_parser("enableuser",help="Enables a hosted mailbox",parents=[global_command_parser])
     enable_user_subcommand.set_defaults(func=enable_user)
 
     disable_user_subcommand = subparsers.add_parser("disableuser",help="Disables a hosted mailbox",parents=[global_command_parser])
     disable_user_subcommand.set_defaults(func=disable_user)
+
     get_mailbox_subcommand = subparsers.add_parser("getmailbox",help="Gets all available information about a mailbox",parents=[global_command_parser])
     get_mailbox_subcommand.set_defaults(func=get_mailbox)
 
